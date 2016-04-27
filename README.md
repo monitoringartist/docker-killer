@@ -31,7 +31,7 @@ docker run \
   -v /:/rootfs \
   --oom-kill-disable \
   monitoringartist/docker-killer \
-  all
+  kernelpanic  
 ```
 
 Solution: Don't run any Docker images, which can cause kernel panic.
@@ -49,7 +49,6 @@ docker run \
 ```
 
 Solution: Use [cgroup CPU subsytem limitation](https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/Resource_Management_Guide/sec-cpu.html).
-
 
 * `membomb` - it will try to exhaust your memory and swap space
 
@@ -120,13 +119,21 @@ This test your Docker orchestration of your daemonized containers. Your solution
 # TODO
 
 * chaosmonkey - stop random container
-* passwords - read host passwd/shadow files
 
 # General Docker recommendations
 
 * Trust only to your own well tested Docker images from your own repo. Public Docker hub images can be created by (choose here your favorite hacker flavour: Russian, American, Slovak, black/white hat, ...) hackers.
 * Use explicit tag, instead of implicit default tag. Otherwise your containers can be upgraded unexpectedly.
 * Monitoring - monitor high level of the service provided by container. Container should expose healthcheck (HTTP) endpoint, which will be monitored for any unexepected status codes/strings.
+
+# Recommended documentation
+
+- https://docs.docker.com/engine/reference/run/
+- https://www.kernel.org/doc/Documentation/cgroups/memory.txt
+- https://www.kernel.org/doc/Documentation/cgroups/cpuacct.txt
+- https://www.kernel.org/doc/Documentation/cgroups/blkio-controller.txt
+- https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/Resource_Management_Guide/index.html
+- https://goldmann.pl/blog/2014/09/11/resource-management-in-docker/
 
 # Inspiration
 
