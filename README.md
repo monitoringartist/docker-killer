@@ -20,9 +20,11 @@ docker run \
   all
 ```
 
-Particular tests:
+# Particular tests:
 
-* `kernelpanic` - it will try to cause kernel panic/reboot
+## kernelpanic
+
+It will generate kernel panic.
 
 ```
 docker run \
@@ -31,12 +33,14 @@ docker run \
   -v /:/rootfs \
   --oom-kill-disable \
   monitoringartist/docker-killer \
-  kernelpanic  
+  kernelpanic
 ```
 
 Solution: Don't run any Docker images, which can cause kernel panic.
 
-* `cpubomb` - it will try to 100% utilize all CPUs
+## cpubomb
+
+It will 100% utilize all CPUs.
 
 ```
 docker run \
@@ -50,7 +54,9 @@ docker run \
 
 Solution: Use [cgroup CPU subsytem limitation](https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/Resource_Management_Guide/sec-cpu.html).
 
-* `membomb` - it will try to exhaust your memory and swap space
+## membomb
+
+It will exhaust host memory and swap space.
 
 ```
 docker run \
@@ -64,7 +70,9 @@ docker run \
 
 Solution: Don't use `--oom-kill-disable` unless it's neccessary and use [cgroup memory subsystem](https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/Resource_Management_Guide/sec-memory.html).
 
-* `forkbomb` - it will try execute standard bash forkbomb 
+## forkbomb
+
+It will execute number of forks.
 
 ```
 docker run \
@@ -76,11 +84,11 @@ docker run \
   forkbomb
 ```
 
-Solution:
+Solution: Use your standard OS number of processes limitations: number of processes per user and use custom user with defined limit in the container.
 
-Use your standard OS number of processes limitations: number of processes per user and use custom user with defined limit in the container.   
- 
-* `netbomb` - it will try execute utilize your internet connectivity by using UDP stream 
+## netbomb
+
+It will utilize your internet connectivity by using UDP stream.
 
 ```
 docker run \
@@ -94,8 +102,10 @@ docker run \
 
 Solution: Use OS network limitations (shapping, ....) or [cgroup network priority (net_prio) subsystem](https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/Resource_Management_Guide/net_prio.html). If you need the best performance, don't use default Docker userland proxy. Try to use host network or some custom network solution.
 
-* `die` - exit container with exit code 1
- 
+## die
+
+Exit container with exit code 1.
+
 ```
 docker run \
   --rm -ti \
@@ -112,7 +122,7 @@ Test your Docker orchestration of daemonized containers. Your solution should (r
 
 | Environment variable | Description |
 | -------------------- | ----------- |
-| TIMEOUT | Test duration - default 60 sec per test | 
+| TIMEOUT | Test duration - default 60 sec per test |
 | NETBOMB | Default command for netbomb test: iperf -c iperf.scottlinux.com -i 1 -p 5201 -u -t $TIMEOUT, you may to use another public iperf server https://iperf.fr/iperf-servers.php |
 
 # TODO
@@ -151,11 +161,10 @@ Project is security scanned regularly. All detected vulnerabilities are fixed:
 
 # Author
 
-[Devops Monitoring zExpert](http://www.jangaraj.com 'DevOps / Docker / Kubernetes / Zabbix / Zenoss / Monitoring'), 
-who loves monitoring systems, which start with letter Z. 
+[Devops Monitoring zExpert](http://www.jangaraj.com 'DevOps / Docker / Kubernetes / Zabbix / Zenoss / Monitoring'),
+who loves monitoring systems, which start with letter Z.
 Those are Zabbix and Zenoss.
 
 Professional monitoring/DevOps services:
 
 [![Monitoring Artist](http://monitoringartist.com/img/github-monitoring-artist-logo.jpg)](http://www.monitoringartist.com 'DevOps / Docker / Kubernetes / Zabbix / Zenoss / Monitoring')
- 
