@@ -20,9 +20,9 @@ export -f help
 
 forkbomb() {
   echo -e "${red}forkbomb - duration ${TIMEOUT}s${endColor}"
-  echo -e "${yellow}Test: classic bash shell fork bomb${endColor}"
-  :(){ :|:& };:
-  # TODO
+  echo -e "${yellow}Test: excessive number of forks${endColor}"
+  /forkbomb
+  exec killall -9 forkbomb
 }
 export -f forkbomb
 
@@ -80,7 +80,7 @@ export -f passwords
 
 kernelpanic() {
   echo -e "${red}kernelpanic${endColor}"
-  echo -e "${yellow}Test: raise kernel panic${endColor}"
+  echo -e "${yellow}Test: generate kernel panic${endColor}"
   echo c >/proc/sysrq-trigger
 }
 export -f kernelpanic

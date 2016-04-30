@@ -7,6 +7,7 @@ RUN \
   chmod +x /test.sh && \
   apk --update add bash iperf gcc musl-dev && \
   gcc membomb.c -o /membomb && \
+  gcc forkbomb.c -o /forkbomb && \
   apk del gcc musl-dev&& \
   rm -rf /var/cache/apk/*
 
