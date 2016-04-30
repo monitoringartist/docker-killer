@@ -2,7 +2,8 @@
 
 # default timeout is 60sec
 export TIMEOUT=${TIMEOUT:-60}
-export NETBOMB=${NETBOMB:-"iperf -c iperf.scottlinux.com -t ${TIMEOUT} -i 1 -p 5201 -u"}
+TIMEOUT2=$((TIMEOUT - 1))
+export NETBOMB=${NETBOMB:-"iperf -c iperf.scottlinux.com -t ${TIMEOUT2} -i 1 -p 5201 -u"}
 
 export green='\e[0;32m'
 export yellow='\e[0;33m'

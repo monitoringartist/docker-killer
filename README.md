@@ -20,7 +20,7 @@ docker run \
   all
 ```
 
-# Particular tests:
+# Particular tests
 
 ## kernelpanic
 
