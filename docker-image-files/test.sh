@@ -4,23 +4,31 @@
 export TIMEOUT=${TIMEOUT:-60}
 export NETBOMB=${NETBOMB:-"iperf -c iperf.scottlinux.com -t ${TIMEOUT} -i 1 -p 5201 -u"}
 
+green='\e[0;32m'
+yellow='\e[0;33m'
+red='\e[0;31m'
+blue='\e[0;34m'
+endColor='\e[0m'
+
 help() {
-  echo "WARNING: IT IS NOT GUARANTEED THAT YOUR SYSTEM/CONTAINERS WILL SURVIVE THIS KILLER TESTING! DO NOT USE THIS IMAGE UNLESS YOU REALLY KNOW WHAT ARE YOU DOING!"
-  echo "Danger Docker tests are included in this image, such as: cpubomb, membomb, netbomb, forkbomb, ..."
-  echo "Use 'all' or name of the particular test, e.g. docker run --rm -ti monitoringartist/docker-kill cpubomb"
+  echo -en "${red}WARNING: IT IS NOT GUARANTEED THAT YOUR SYSTEM/CONTAINERS WILL SURVIVE THIS KILLER TESTING! DO NOT USE THIS IMAGE UNLESS YOU REALLY KNOW WHAT ARE YOU DOING!${endColor}"
+  echo -en "${yellow}Tests included in this image, such as: cpubomb, membomb, netbomb, forkbomb, ...${endColor}"
+  echo -en "${yellow}Use 'all' or name of the particular test, e.g.:${endColor}" 
+  echo -en "${yellow}docker run --rm -ti --privileged -v /:/rootfs --oom-kill-disable monitoringartist/docker-killer cpubomb${endColor}"
 }
 export -f help
 
 forkbomb() {
-  echo 'forkbomb()'
-  echo 'Test: classic bash shell fork bomb'
+  echo -en "${red}forkbomb - duration ${TIMEOUT}s${endColor}"
+  echo -en "${yellow}Test: classic bash shell fork bomb${endColor}"
   :(){ :|:& };:
+  # TODO
 }
 export -f forkbomb
 
 cpubomb() {
-  echo 'cpubomb()'
-  echo 'Test: excessive CPU utilization - one proces per processor with empty cycles'
+  echo -en "${red}cpubomb - duration ${TIMEOUT}s${endColor}"
+  echo -en "${yellow}Test: excessive CPU utilization - one proces per processor with empty cycles${endColor}"
   top -b -n${TIMEOUT} -d1 | grep "^CPU:" &
   #top -b -n${TIMEOUT} -d1 | grep "^Load average:" &      
   (
@@ -34,43 +42,44 @@ cpubomb() {
 export -f cpubomb
 
 membomb() {
-  echo 'membomb()'
-  echo 'Test: excessive memory utilization - bash variable with RAM+Swap size'
+  echo -en "${red}membomb - duration ${TIMEOUT}s${endColor}"
+  echo -en "${yellow}Test: excessive memory utilization - bash variable with RAM+Swap size${endColor}"
   top -b -n${TIMEOUT} -d1 | grep "^Mem:" & 
   /membomb.bin
 }
 export -f membomb
 
 netbomb() {
-  echo 'netbomb()'
-  echo 'Test: excessive network utilization - iperf against public iperf server'  
-  $($NETBOMB)
+  echo -en "${red}netbomb - duration ${TIMEOUT}s${endColor}"
+  echo -en "${yellow}Test: excessive network utilization - iperf against public iperf server${endColor}"  
+  eval $NETBOMB
 }
 export -f netbomb
 
 die() {
-  echo 'die()'
-  echo 'Test: exit container with exit code 1'
+  echo -en "${red}die${endColor}"
+  echo -en "${yellow}Test: exit container with exit code 1${endColor}"
   exit 1
 }
 export -f die
 
 chaosmonkey() {
-  echo 'chaosmonkey()'
-  echo 'Test: stop random container'
+  echo -en "${red}chaosmonkey${endColor}"
+  echo -en "${yellow}TODO Test: stop random running container${endColor}"
   # TODO
 }
 export -f chaosmonkey
 
 passwords() {
-  echo 'passwords()'
-  echo 'Test: read password hashes from host system'
+  echo -en "${red}passwords${endColor}"
+  echo -en "${yellow}TODO Test: read password hashes from the host system${endColor}"
   # TODO
 }
-export -f chaosmonkey
+export -f passwords
 
 kernelpanic() {
-  echo 'kernelpanic()'
+  echo -en "${red}kernelpanic${endColor}"
+  echo -en "${yellow}Test: raise kernel panic${endColor}"
   echo c >/proc/sysrq-trigger
 }
 export -f kernelpanic
