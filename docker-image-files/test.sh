@@ -79,7 +79,7 @@ export -f passwords
 
 kernelpanic() {
   echo -e "${red}kernelpanic${endColor}"
-  echo -e "${yellow}Test: raise kernel panic${endColor}
+  echo -e "${yellow}Test: raise kernel panic${endColor}"
   echo c >/proc/sysrq-trigger
 }
 export -f kernelpanic
