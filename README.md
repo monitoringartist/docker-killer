@@ -1,4 +1,4 @@
-# Docker Killer
+# Docker Killer [![](https://badge.imagelayers.io/monitoringartist/docker-killer:latest.svg)](https://imagelayers.io/?images=monitoringartist/docker-killer:latest)
 
 **WARNING: IT IS NOT GUARANTEED THAT YOUR SYSTEM/CONTAINERS WILL SURVIVE THIS KILLER TESTING! DO NOT USE THIS IMAGE UNLESS YOU REALLY KNOW WHAT ARE YOU DOING!**
 
@@ -92,7 +92,7 @@ docker run \
   netbomb
 ```
 
-Solution: Use your OS network black magic (shapping, ....) or [cgroup network priority (net_prio) subsystem](https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/Resource_Management_Guide/net_prio.html). If you need the best performance, don't use default Docker userland proxy. Try to use host network or some custom network solution.
+Solution: Use OS network limitations (shapping, ....) or [cgroup network priority (net_prio) subsystem](https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/Resource_Management_Guide/net_prio.html). If you need the best performance, don't use default Docker userland proxy. Try to use host network or some custom network solution.
 
 * `die` - exit container with exit code 1
  
@@ -106,8 +106,7 @@ docker run \
   die
 ```
 
-This test your Docker orchestration of your daemonized containers. Your solution should (re)start container automatically. Some people are using supervisor in the container, but it's adding another process into container. The best approach, which I have seen is systemd, which handle Docker container lifecycle. Your container is your system(d) service, which you are able to start/stop/restart by using standard systemd utilities. Recommened Puppet module - https://github.com/garethr/garethr-docker
-
+Test your Docker orchestration of daemonized containers. Your solution should (re)start container automatically. Some people are using supervisor in the container, but it's adding another process into container. The best approach, which I have seen is systemd, which handle Docker container lifecycle. Your container is your system(d) service, which you are able to start/stop/restart by using standard systemd utilities. Recommened Puppet module - https://github.com/garethr/garethr-docker
 
 # Environment variables
 

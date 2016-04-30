@@ -12,8 +12,8 @@ export endColor='\e[0m'
 
 help() {
   echo -e "${red}WARNING: IT IS NOT GUARANTEED THAT YOUR SYSTEM/CONTAINERS WILL SURVIVE THIS KILLER TESTING! DO NOT USE THIS IMAGE UNLESS YOU REALLY KNOW WHAT ARE YOU DOING!${endColor}"
-  echo -e "${yellow}Tests included in this image, such as: cpubomb, membomb, netbomb, forkbomb, ...${endColor}"
-  echo -e "${yellow}Use 'all' or name of the particular test, e.g.:${endColor}" 
+  echo -e "${yellow}Tests included in this image, such as: cpubomb, membomb, netbomb, forkbomb, die, kernelpanic ...${endColor}"
+  echo -e "${yellow}Use 'all' or name of the particular test, for example:${endColor}"
   echo -e "${yellow}docker run --rm -ti --privileged -v /:/rootfs --oom-kill-disable monitoringartist/docker-killer cpubomb${endColor}"
 }
 export -f help
@@ -30,7 +30,7 @@ cpubomb() {
   echo -e "${red}cpubomb - duration ${TIMEOUT}s${endColor}"
   echo -e "${yellow}Test: excessive CPU utilization - one proces per processor with empty cycles${endColor}"
   top -b -n${TIMEOUT} -d1 | grep "^CPU:" &
-  #top -b -n${TIMEOUT} -d1 | grep "^Load average:" &      
+  #top -b -n${TIMEOUT} -d1 | grep "^Load average:" &
   (
     pids=""
     cpus=$(getconf _NPROCESSORS_ONLN)
@@ -44,14 +44,14 @@ export -f cpubomb
 membomb() {
   echo -e "${red}membomb - duration ${TIMEOUT}s${endColor}"
   echo -e "${yellow}Test: excessive memory utilization - bash variable with RAM+Swap size${endColor}"
-  top -b -n${TIMEOUT} -d1 | grep "^Mem:" & 
-  /membomb.bin
+  top -b -n${TIMEOUT} -d1 | grep "^Mem:" &
+  /membomb
 }
 export -f membomb
 
 netbomb() {
   echo -e "${red}netbomb - duration ${TIMEOUT}s${endColor}"
-  echo -e "${yellow}Test: excessive network utilization - iperf against public iperf server${endColor}"  
+  echo -e "${yellow}Test: excessive network utilization - iperf against public iperf server${endColor}"
   eval $NETBOMB
 }
 export -f netbomb
@@ -79,16 +79,20 @@ export -f passwords
 
 kernelpanic() {
   echo -e "${red}kernelpanic${endColor}"
-  echo -e "${yellow}Test: raise kernel panic${endColor}"
+  echo -e "${yellow}Test: raise kernel panic${endColor}
   echo c >/proc/sysrq-trigger
 }
 export -f kernelpanic
 
 if [ "$1" == "all" ]; then
-  timeout -t ${TIMEOUT} -s KILL bash -c cpubomb
-  timeout -t ${TIMEOUT} -s KILL bash -c membomb
-  timeout -t ${TIMEOUT} -s KILL bash -c netbomb
-  timeout -t ${TIMEOUT} -s KILL bash -c forkbomb
-else 
+  timeout -t ${TIMEOUT} -s KILL bash -c cpubomb 2>/dev/null
+  echo -e "${yellow}----------------------------${endColor}\n"
+  timeout -t ${TIMEOUT} -s KILL bash -c membomb 2>/dev/null
+  echo -e "${yellow}----------------------------${endColor}\n"
+  timeout -t ${TIMEOUT} -s KILL bash -c netbomb 2>/dev/null
+  echo -e "${yellow}----------------------------${endColor}\n"
+  timeout -t ${TIMEOUT} -s KILL bash -c forkbomb 2>/dev/null
+  echo -e "${yellow}----------------------------${endColor}"
+else
   timeout -t ${TIMEOUT} -s KILL bash -c $@
 fi
