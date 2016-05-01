@@ -2,7 +2,7 @@
 
 **WARNING: IT IS NOT GUARANTEED THAT YOUR SYSTEM/CONTAINERS WILL SURVIVE THIS KILLER TESTING! DO NOT USE THIS IMAGE UNLESS YOU REALLY KNOW WHAT ARE YOU DOING!**
 
-![Dockerize it](http://i.imgur.com/V8KfCpj.jpg)
+![Dockerize ak the things](https://raw.githubusercontent.com/monitoringartist/docker-killer/master/doc/dockerize-all-the-things.jpg)
 
 There is a million of articles how Docker containers are awesome and only a few articles about Docker problems in enterprise production. Hopefully this image will help you to understand problems of Docker in production, which I have discovered from my 2 years commercial Docker experience. Feel free to add more usefull test cases. And again:
 
