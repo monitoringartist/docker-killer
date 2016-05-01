@@ -22,8 +22,8 @@ export -f help
 forkbomb() {
   echo -e "${red}forkbomb - duration ${TIMEOUT}s${endColor}"
   echo -e "${yellow}Test: excessive number of forks${endColor}"
+  watch -t -n 1 "cat /proc/stat | grep procs_running" &
   /forkbomb
-  exec killall -9 forkbomb
 }
 export -f forkbomb
 
@@ -87,14 +87,14 @@ kernelpanic() {
 export -f kernelpanic
 
 if [ "$1" == "all" ]; then
-  timeout -t ${TIMEOUT} -s KILL bash -c cpubomb 2>/dev/null
+  timeout -t ${TIMEOUT} -s KILL bash -c cpubomb
   echo -e "${yellow}----------------------------${endColor}\n"  
-  timeout -t ${TIMEOUT} -s KILL bash -c netbomb 2>/dev/null
+  timeout -t ${TIMEOUT} -s KILL bash -c netbomb
   echo -e "${yellow}----------------------------${endColor}\n"
-  timeout -t ${TIMEOUT} -s KILL bash -c forkbomb 2>/dev/null
+  timeout -t ${TIMEOUT} -s KILL bash -c forkbomb
   echo -e "${yellow}----------------------------${endColor}\n"
-  timeout -t ${TIMEOUT} -s KILL bash -c membomb 2>/dev/null
+  timeout -t ${TIMEOUT} -s KILL bash -c membomb
   echo -e "${yellow}----------------------------${endColor}"
 else
-  timeout -t ${TIMEOUT} -s KILL bash -c $@ 2>/dev/null
+  timeout -t ${TIMEOUT} -s KILL bash -c $@
 fi
