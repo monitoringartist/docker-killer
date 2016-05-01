@@ -8,7 +8,7 @@ There is a million of articles how Docker containers are awesome and only a few 
 
 **WARNING: IT IS NOT GUARANTEED THAT YOUR SYSTEM/CONTAINERS WILL SURVIVE THIS KILLER TESTING! DO NOT USE THIS IMAGE UNLESS YOU REALLY KNOW WHAT ARE YOU DOING!**
 
-All serial tests with default 60 sec timeout per test (except die/kernel panic test):
+All tests with default 60s timeout per test (except die/kernel panic test):
 
 ```
 docker run \
@@ -21,22 +21,6 @@ docker run \
 ```
 
 # Particular tests
-
-## kernelpanic
-
-It will generate kernel panic.
-
-```
-docker run \
-  --rm -ti \
-  --privileged \
-  -v /:/rootfs \
-  --oom-kill-disable \
-  monitoringartist/docker-killer \
-  kernelpanic
-```
-
-Solution: Don't run any Docker images, which can cause kernel panic.
 
 ## cpubomb
 
@@ -51,6 +35,7 @@ docker run \
   monitoringartist/docker-killer \
   cpubomb
 ```
+![docker-kill cpubomb](https://raw.githubusercontent.com/monitoringartist/docker-killer/master/doc/docker-killer-cpubomb.gif)
 
 Solution: Use [cgroup CPU subsytem limitation](https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/Resource_Management_Guide/sec-cpu.html).
 
@@ -68,7 +53,28 @@ docker run \
   membomb
 ```
 
+![docker-kill membomb](https://raw.githubusercontent.com/monitoringartist/docker-killer/master/doc/docker-killer-membomb.gif)
+
 Solution: Don't use `--oom-kill-disable` unless it's neccessary and use [cgroup memory subsystem](https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/Resource_Management_Guide/sec-memory.html).
+
+## netbomb
+
+It will utilize your internet connectivity by using UDP stream.
+
+```
+docker run \
+  --rm -ti \
+  --privileged \
+  -v /:/rootfs \
+  --oom-kill-disable \
+  monitoringartist/docker-killer \
+  netbomb
+```
+
+![docker-kill netbomb](https://raw.githubusercontent.com/monitoringartist/docker-killer/master/doc/docker-killer-netbomb.gif)
+
+Solution: Use OS network limitations (shapping, ....) or [cgroup network priority (net_prio) subsystem](https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/Resource_Management_Guide/net_prio.html). If you need the best performance, don't use default Docker userland proxy. Try to use host network or some custom network solution.
+
 
 ## forkbomb
 
@@ -86,9 +92,9 @@ docker run \
 
 Solution: Use your standard OS number of processes limitations: number of processes per user and use custom user with defined limit in the container.
 
-## netbomb
+## kernelpanic
 
-It will utilize your internet connectivity by using UDP stream.
+It will generate kernel panic.
 
 ```
 docker run \
@@ -97,10 +103,10 @@ docker run \
   -v /:/rootfs \
   --oom-kill-disable \
   monitoringartist/docker-killer \
-  netbomb
+  kernelpanic
 ```
 
-Solution: Use OS network limitations (shapping, ....) or [cgroup network priority (net_prio) subsystem](https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/Resource_Management_Guide/net_prio.html). If you need the best performance, don't use default Docker userland proxy. Try to use host network or some custom network solution.
+Solution: Don't run any Docker images, which can cause kernel panic.
 
 ## die
 

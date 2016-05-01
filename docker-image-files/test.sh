@@ -22,7 +22,8 @@ export -f help
 forkbomb() {
   echo -e "${red}forkbomb - duration ${TIMEOUT}s${endColor}"
   echo -e "${yellow}Test: excessive number of forks${endColor}"
-  while true; do grep procs_running /proc/stat; sleep 1; done
+  # TODO display stat
+  #while true; do { grep procs_running /proc/stat; sleep 1; } & done
   /forkbomb
 }
 export -f forkbomb
