@@ -22,7 +22,7 @@ export -f help
 forkbomb() {
   echo -e "${red}forkbomb - duration ${TIMEOUT}s${endColor}"
   echo -e "${yellow}Test: excessive number of forks${endColor}"
-  watch -t -n 1 "cat /proc/stat | grep procs_running" &
+  while true; do grep procs_running /proc/stat; sleep 1; done
   /forkbomb
 }
 export -f forkbomb
