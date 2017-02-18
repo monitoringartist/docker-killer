@@ -1,4 +1,4 @@
-# Docker Killer [![](https://badge.imagelayers.io/monitoringartist/docker-killer:latest.svg)](https://imagelayers.io/?images=monitoringartist/docker-killer:latest)
+# Docker Killer
 
 **WARNING: IT IS NOT GUARANTEED THAT YOUR SYSTEM/CONTAINERS WILL SURVIVE THIS KILLER TESTING! DO NOT USE THIS IMAGE UNLESS YOU REALLY KNOW WHAT ARE YOU DOING!**
 
@@ -154,23 +154,18 @@ Test your Docker orchestration of daemonized containers. Your solution should (r
 
 [Hitler uses Docker](https://www.youtube.com/watch?v=PivpCKEiQOQ) - overview of Docker in production problems. If you are familiar with Docker problems, then it's funny video.
 
-# Support
-
-Project has best effort support. Our typical response time is 1 working day. If you need commercial support please contact us.
-
-# Security issues
-
-Project is security scanned regularly. All detected vulnerabilities are fixed:
-
-* Critical vulnerabilities - within 72 hours of notification
-* Major vulnerabilities - within 7 days of notification
-
 # Author
 
-[Devops Monitoring zExpert](http://www.jangaraj.com 'DevOps / Docker / Kubernetes / Zabbix / Zenoss / Monitoring'),
-who loves monitoring systems, which start with letter Z.
-Those are Zabbix and Zenoss.
+[Devops Monitoring Expert](http://www.jangaraj.com 'DevOps / Docker / Kubernetes / AWS ECS / Google GCP / Zabbix / Zenoss / Terraform / Monitoring'),
+who loves monitoring systems and cutting/bleeding edge technologies: Docker,
+Kubernetes, ECS, AWS, Google GCP, Terraform, Lambda, Zabbix, Grafana, Elasticsearch,
+Kibana, Prometheus, Sysdig, ...
 
-Professional monitoring/DevOps services:
+Summary:
+* 1000+ [GitHub](https://github.com/monitoringartist/) stars
+* 6000+ [Grafana dashboard](https://grafana.net/monitoringartist) downloads
+* 800 000+ [Docker image](https://hub.docker.com/u/monitoringartist/) pulls
 
-[![Monitoring Artist](http://monitoringartist.com/img/github-monitoring-artist-logo.jpg)](http://www.monitoringartist.com 'DevOps / Docker / Kubernetes / Zabbix / Zenoss / Monitoring')
+Professional devops / monitoring / consulting services:
+
+[![Monitoring Artist](http://monitoringartist.com/img/github-monitoring-artist-logo.jpg)](http://www.monitoringartist.com 'DevOps / Docker / Kubernetes / AWS ECS / Google GCP / Zabbix / Zenoss / Terraform / Monitoring')
